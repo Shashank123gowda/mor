@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shashank Views — Gallery</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body class="sunrise-bg">
+  <header class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <h2 class="page-title">Shashank Views</h2>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h3>Uploaded Photos</h3>
+      {% if files %}
+        <div class="gallery-grid">
+          {% for f in files %}
+            <a class="gallery-item" href="/uploads/{{ f.name }}" target="_blank" rel="noopener" title="{{ f.date }}">
+              <figure>
+                <img src="/uploads/{{ f.name }}" alt="Photo {{ f.date }}" loading="lazy" />
+                <figcaption>{{ f.date }}</figcaption>
+              </figure>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="hint">No photos uploaded yet. Try uploading one from the Upload page!</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

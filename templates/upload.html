@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Morning Photos</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body class="sunrise-bg">
+  <header class="topbar">
+    <a href="/" class="logo">❤ Shubha Walks</a>
+    <h2 class="page-title">Upload Your Daily Photo</h2>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrap">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <section class="card">
+      <h3>Upcoming Days</h3>
+      <p class="hint">Pick a date and upload your photo. Thumbnails will show once uploaded.</p>
+      <ul class="date-list">
+        {% for it in items %}
+          <li id="d-{{ it.date }}" class="date-row">
+            <div class="date-label">
+              <span class="day">{{ it.date }}</span>
+            </div>
+            <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="date" value="{{ it.date }}" />
+              <label class="file-input">
+                <input type="file" name="photo" accept="image/*" aria-label="Choose image for {{ it.date }}" />
+                <span>Select Photo</span>
+              </label>
+              <button type="submit" class="btn tropical small">Upload</button>
+            </form>
+            <div class="thumb">
+              {% if it.existing %}
+                <a href="/uploads/{{ it.existing }}" target="_blank" rel="noopener">
+                  <img src="/uploads/{{ it.existing }}" alt="Photo for {{ it.date }}" />
+                </a>
+              {% else %}
+                <span class="placeholder">No photo yet</span>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
